@@ -1,0 +1,13 @@
+name: My Test Actions
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
+jobs:
+  testing-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: step 1
+        run: echo "Paso 1"
+      - name: step 2
+        run: |
+          echo "Paso 2"
+          echo "Paso 3"
