@@ -1,5 +1,5 @@
 name: Create Bucket
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: ${{ github.actor }} is Creating GCP Bucket
 on: [push]
 jobs:
   testing-action:
@@ -29,7 +29,11 @@ jobs:
       - name: "exec pulumi"
         uses: pulumi/actions@v4
         with:
-          command: preview
+          # command: preview
+          command: up
           stack-name: dev
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_TOKEN }}
+
+# pulumi preview: allows you to see what changes will be made before actually applying them. This is useful for reviewing the changes and ensuring that they are as expected.
+# pulumi up: applies the changes to your infrastructure. It will create, update, or delete resources as necessary to match the desired state defined in your Pulumi program.
