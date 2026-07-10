@@ -1,5 +1,5 @@
 name: Create Bucket
-run-name: ${{ github.actor }} is Creating GCP Bucket
+run-name: ${{ github.actor }} is destroying GCP Bucket
 on: [push]
 jobs:
   testing-action:
@@ -30,10 +30,12 @@ jobs:
         uses: pulumi/actions@v4
         with:
           # command: preview
-          command: up
+          # command: up
+          command: destroy
           stack-name: dev
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_TOKEN }}
 
 # pulumi preview: allows you to see what changes will be made before actually applying them. This is useful for reviewing the changes and ensuring that they are as expected.
 # pulumi up: applies the changes to your infrastructure. It will create, update, or delete resources as necessary to match the desired state defined in your Pulumi program.
+# pulumi destroy: removes all resources managed by the Pulumi stack. This is useful for cleaning up resources when they are no longer needed.
