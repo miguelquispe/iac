@@ -1,5 +1,9 @@
 name: Deploy Cloud Run
-on: [push]
+on:
+  push:
+    branches:
+      - "pulumi-deploy-app-google-cloud-run"
+      - "!master"
 jobs:
   testing-action:
     runs-on: ubuntu-latest
@@ -10,7 +14,7 @@ jobs:
       # setup node (typescript)
       - uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 24
 
       - name: "install dependencies"
         run: npm install
@@ -30,7 +34,7 @@ jobs:
         with:
           # command: preview
           # command: up
-          command: destroy
+          command: up
           stack-name: dev
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_TOKEN }}
