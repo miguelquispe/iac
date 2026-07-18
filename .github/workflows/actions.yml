@@ -1,0 +1,42 @@
+name: Create Bucket Terraform
+on:
+  push:
+    branches:
+      - "terraform-quickstart-gcp"
+jobs:
+  testing-action:
+    runs-on: ubuntu-latest
+    steps:
+      # checkout code
+      - uses: actions/checkout@v3
+
+      # setup node (typescript)
+      # - uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 20
+
+      # - name: "install dependencies"
+      #   run: npm install
+
+      # Google Github Actions
+      - name: "auth GCP"
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: "${{ secrets.GCP_TOKEN }}"
+
+      - name: "setup GCP"
+        uses: "google-github-actions/setup-gcloud@v1"
+
+      # Terraform github actions
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - run: terraform init
+
+      - id: plan
+        run: terraform plan -no-color
+
+      - run: echo ${{ steps.plan.outputs.stdout }}
+      - run: echo ${{ steps.plan.outputs.stderr }}
+      - run: echo ${{ steps.plan.outputs.exitcode }}
