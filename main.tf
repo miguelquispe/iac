@@ -30,6 +30,13 @@ resource "google_cloud_run_service" "cloudrun-exchange-app" {
     spec {
       containers {
         image = "gcr.io/pulumi-gcp-501610/exchange-app-terraform:latest"
+
+        resources {
+          limits = {
+            memory = "512Mi"
+            cpu    = "1"
+          }
+        }
       }
     }
   }
