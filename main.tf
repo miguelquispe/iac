@@ -33,8 +33,8 @@ resource "google_cloud_run_service" "cloudrun-exchange-app" {
 
         resources {
           limits = {
-            memory = "512Mi"
-            cpu    = "1"
+            memory = "1024Mi"
+            cpu    = "2"
           }
         }
       }
