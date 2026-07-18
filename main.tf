@@ -16,29 +16,29 @@ terraform {
 }
 
 provider "google" {
-  project     = "pulumi-gcp-501610"
-  region      = "us-central1"
-  zone        = "us-central1-c"
+  project = "pulumi-gcp-501610"
+  region  = "us-central1"
+  zone    = "us-central1-c"
 }
 
-# Cloud Run
-# resource "google_cloud_run_service" "cloudrun-exchange-app" {
-#   name     = "cloudrun-exchange-app"
-#   location = "us-central1"
+# Cloud Run with Container Image
+resource "google_cloud_run_service" "cloudrun-exchange-app" {
+  name     = "cloudrun-exchange-app"
+  location = "us-central1"
 
-#   template {
-#     spec {
-#       containers {
-#         image = "gcr.io/pulumi-gcp-501610/exchange-app-terraform:latest"
-#       }
-#     }
-#   }
+  template {
+    spec {
+      containers {
+        image = "gcr.io/pulumi-gcp-501610/exchange-app-terraform:latest"
+      }
+    }
+  }
 
-#   traffic {
-#     percent         = 100
-#     latest_revision = true
-#   }
-# }
+  traffic {
+    percent         = 100
+    latest_revision = true
+  }
+}
 
 # resource "google_compute_network" "vpc_network" {
 #   name = "terraform-network"
@@ -61,6 +61,3 @@ provider "google" {
 #     }
 #   }
 # }
-
-
-# GCP_SECRETS_ACCESS_KEY
