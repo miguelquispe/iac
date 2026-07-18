@@ -31,6 +31,10 @@ resource "google_cloud_run_service" "cloudrun-exchange-app" {
       containers {
         image = "gcr.io/pulumi-gcp-501610/exchange-app-terraform:latest"
 
+        ports {
+          container_port = 8080
+        }
+
         resources {
           limits = {
             memory = "1024Mi"
