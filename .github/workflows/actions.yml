@@ -1,0 +1,50 @@
+name: Deploy Terraform Google Cloud Run
+on:
+  push:
+    branches:
+      - "terraform-deploy-app-google-cloud-run"
+jobs:
+  testing-action:
+    runs-on: ubuntu-latest
+    env:
+      GOOGLE_CREDENTIALS: ${{ secrets.GCP_TOKEN }}
+    steps:
+      # checkout code
+      - uses: actions/checkout@v3
+
+      # Docker build (inside working directory: exchange-app)
+      - name: Build docker image
+        run: docker build -t exchange-app-terraform:latest .
+        working-directory: exchage-app
+
+        # Google Github Actions
+      - name: "auth GCP"
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: "${{ secrets.GCP_TOKEN }}"
+
+      - name: "setup GCP"
+        uses: "google-github-actions/setup-gcloud@v1"
+
+      # Google Container Registry (GCR) authentication
+      - name: "configure gcr.io"
+        run: gcloud auth configure-docker gcr.io
+
+      # Push image GCR
+      - name: "Push image to registry"
+        run: |
+          docker tag exchange-app-terraform:latest gcr.io/pulumi-gcp-501610/exchange-app-terraform:latest
+          docker push gcr.io/pulumi-gcp-501610/exchange-app-terraform:latest
+
+      # Terraform github actions
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - run: terraform init
+
+      - id: plan
+        run: terraform plan -no-color
+
+      # - run: terraform apply -auto-approve
+      - run: terraform destroy -auto-approve
