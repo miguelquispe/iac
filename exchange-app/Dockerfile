@@ -17,4 +17,4 @@ RUN npm install -g serve
 COPY --from=build /usr/src/app/dist/exchange-app /usr/src/app/dist/
 
 EXPOSE 8080
-CMD ["serve", "-s", "dist", "-l", "8080"]
+CMD ["serve", "-s", "dist/browser", "-l", "8080"]
