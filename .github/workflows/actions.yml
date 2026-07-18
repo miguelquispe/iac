@@ -12,23 +12,6 @@ jobs:
       # checkout code
       - uses: actions/checkout@v3
 
-      # setup node (typescript)
-      # - uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 20
-
-      # - name: "install dependencies"
-      #   run: npm install
-
-      # Google Github Actions
-      # - name: "auth GCP"
-      #   uses: google-github-actions/auth@v1
-      #   with:
-      #     credentials_json: "${{ secrets.GCP_TOKEN }}"
-
-      # - name: "setup GCP"
-      #   uses: "google-github-actions/setup-gcloud@v1"
-
       # Terraform github actions
       - uses: hashicorp/setup-terraform@v4
         with:

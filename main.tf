@@ -32,3 +32,16 @@ resource "google_storage_bucket" "udemy-iac-training" {
 
   uniform_bucket_level_access = true
 }
+
+terraform {
+  cloud {
+    organization = "udemy-iac-course"
+
+    workspaces {
+      name = "udemy-iac-course"
+    }
+  }
+}
+
+
+# GCP_SECRETS_ACCESS_KEY
