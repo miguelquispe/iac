@@ -1,13 +1,20 @@
-FROM node:alpine
+FROM node:alpine AS build
 
 WORKDIR /usr/src/app
 
-COPY package.json .
+COPY package.json ./
 
 RUN npm install
 
 COPY . .
 
-CMD /usr/src/app/node_modules/.bin/ng serve --host 0.0.0.0 --port 8080 --disable-host-check
+RUN npm run build
+
+FROM node:alpine
+WORKDIR /usr/src/app
+RUN npm install -g serve
+
+COPY --from=build /usr/src/app/dist/exchange-app /usr/src/app/dist/
 
 EXPOSE 8080
+CMD ["serve", "-s", "dist", "-l", "8080"]
