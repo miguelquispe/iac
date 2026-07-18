@@ -15,7 +15,7 @@ jobs:
       # Docker build (inside working directory: exchange-app)
       - name: Build docker image
         run: docker build -t exchange-app-terraform:latest .
-        working-directory: exchage-app
+        working-directory: exchange-app
 
         # Google Github Actions
       - name: "auth GCP"
@@ -46,5 +46,5 @@ jobs:
       - id: plan
         run: terraform plan -no-color
 
-      # - run: terraform apply -auto-approve
-      - run: terraform destroy -auto-approve
+      - run: terraform apply -auto-approve
+      # - run: terraform destroy -auto-approve
