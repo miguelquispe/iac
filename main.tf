@@ -51,6 +51,23 @@ resource "google_cloud_run_service" "cloudrun-exchange-app" {
   }
 }
 
+data "google_iam_policy" "admin" {
+  binding {
+    role = "roles/run.invoker"
+    members = [
+      "allUsers"
+    ]
+  }
+}
+
+resource "google_cloud_run_service_iam_policy" "policy" {
+  location    = google_cloud_run_service.cloudrun-exchange-app.location
+  project     = google_cloud_run_service.cloudrun-exchange-app.project
+  service     = google_cloud_run_service.cloudrun-exchange-app.name
+  policy_data = data.google_iam_policy.admin.policy_data
+}
+
+
 # resource "google_compute_network" "vpc_network" {
 #   name = "terraform-network"
 # }
