@@ -16,7 +16,6 @@ terraform {
 }
 
 provider "google" {
-  credentials = file("gservice.json")
   project     = "pulumi-gcp-501610"
   region      = "us-central1"
   zone        = "us-central1-c"

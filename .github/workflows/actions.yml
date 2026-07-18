@@ -6,6 +6,8 @@ on:
 jobs:
   testing-action:
     runs-on: ubuntu-latest
+    env:
+      GOOGLE_CREDENTIALS: ${{ secrets.GCP_TOKEN }}
     steps:
       # checkout code
       - uses: actions/checkout@v3
@@ -19,13 +21,13 @@ jobs:
       #   run: npm install
 
       # Google Github Actions
-      - name: "auth GCP"
-        uses: google-github-actions/auth@v1
-        with:
-          credentials_json: "${{ secrets.GCP_TOKEN }}"
+      # - name: "auth GCP"
+      #   uses: google-github-actions/auth@v1
+      #   with:
+      #     credentials_json: "${{ secrets.GCP_TOKEN }}"
 
-      - name: "setup GCP"
-        uses: "google-github-actions/setup-gcloud@v1"
+      # - name: "setup GCP"
+      #   uses: "google-github-actions/setup-gcloud@v1"
 
       # Terraform github actions
       - uses: hashicorp/setup-terraform@v4
